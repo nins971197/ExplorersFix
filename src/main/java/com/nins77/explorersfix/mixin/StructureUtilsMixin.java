@@ -2,6 +2,7 @@ package com.nins77.explorersfix.mixin;
 
 import com.chaosthedude.explorerscompass.util.StructureUtils;
 import com.nins77.explorersfix.client.StructureDisplayCache;
+import com.nins77.explorersfix.config.ExplorerFixConfig;
 import com.nins77.explorersfix.names.StructureNameResolver;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,6 +27,9 @@ public abstract class StructureUtilsMixin {
             ResourceLocation structureId,
             CallbackInfoReturnable<String> callback
     ) {
+        if (!ExplorerFixConfig.translationEnabled()) {
+            return;
+        }
         String original = callback.getReturnValue();
         String resolved = StructureNameResolver.resolve(structureId, original);
         if (resolved != null && !resolved.equals(original)) {

@@ -4,6 +4,7 @@ import com.chaosthedude.explorerscompass.gui.ExplorersCompassScreen;
 import com.chaosthedude.explorerscompass.gui.StructureSearchList;
 import com.chaosthedude.explorerscompass.gui.TransparentTextField;
 import com.chaosthedude.explorerscompass.util.StructureUtils;
+import com.nins77.explorersfix.config.ExplorerFixConfig;
 import com.nins77.explorersfix.names.StructureNameResolver;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -78,8 +79,13 @@ public abstract class StructureSearchMixin {
                 if (source.contains(term.substring(1))) {
                     structureKeysMatchingSearch.add(key);
                 }
-            } else if (StructureNameResolver.matchesSearch(key, term)) {
-                structureKeysMatchingSearch.add(key);
+            } else {
+                boolean matches = ExplorerFixConfig.translationEnabled()
+                        ? StructureNameResolver.matchesSearch(key, term)
+                        : StructureUtils.getPrettyStructureName(key).toLowerCase(Locale.ROOT).contains(term);
+                if (matches) {
+                    structureKeysMatchingSearch.add(key);
+                }
             }
         }
 

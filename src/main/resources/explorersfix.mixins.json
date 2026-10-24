@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nins77.explorersfix.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "explorersfix.refmap.json",
+  "mixins": [
+    "StructureServerCacheMixin",
+    "StructureSearchWorkerMixin"
+  ],
+  "client": [
+    "StructureUtilsMixin",
+    "StructureSearchMixin",
+    "StructureSearchListMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

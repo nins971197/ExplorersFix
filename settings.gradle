@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        maven { url = 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url = 'https://maven.aliyun.com/repository/central' }
+        maven { url = 'https://maven.aliyun.com/repository/public' }
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/maven/' }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'ExplorersFix'

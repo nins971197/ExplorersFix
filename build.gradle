@@ -1,0 +1,91 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = project.mod_version
+group = project.maven_group
+base.archivesName = 'explorersfix'
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+minecraft {
+    mappings channel: 'official', version: project.minecraft_version
+    copyIdeResources = true
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                explorersfix {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'debug'
+            args '--nogui'
+            mods {
+                explorersfix {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, 'explorersfix.refmap.json'
+    config 'explorersfix.mixins.json'
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url = 'https://maven.aliyun.com/repository/central' }
+    maven { url = 'https://maven.aliyun.com/repository/public' }
+    maven { url = 'https://maven.minecraftforge.net/' }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    // ExplorersCompass is a runtime dependency. It is intentionally not bundled.
+    compileOnly files('libs/ExplorersCompass-1.20.1-1.4.0-forge.jar')
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+    options.compilerArgs << '-Xlint:deprecation'
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title'     : "Explorer's Fix",
+            'Specification-Vendor'    : 'nins77',
+            'Specification-Version'   : '1',
+            'Implementation-Title'    : "Explorer's Fix",
+            'Implementation-Version'  : project.jar.archiveVersion,
+            'Implementation-Vendor'   : 'nins77'
+        ])
+    }
+}
+
+tasks.named('jar').configure {
+    finalizedBy 'reobfJar'
+}

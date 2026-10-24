@@ -100,11 +100,16 @@ The Forge client config is `config/explorersfix-client.toml`:
 ```toml
 [general]
 enabled = true
+translationEnabled = true
 showEnglish = true
 autoGenerateNames = true
 minimumConfidence = 40
 logMissing = false
 ```
+
+`translationEnabled = false` disables Chinese name resolution, offline language
+indexing and Chinese alias search. The GUI/search/display caches and server-side
+performance fixes remain active.
 
 `autoGenerateNames = false` disables the offline generator for debugging.
 `minimumConfidence` controls when generated evidence is accepted. A higher

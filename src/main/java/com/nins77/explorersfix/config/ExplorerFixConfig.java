@@ -6,6 +6,7 @@ public final class ExplorerFixConfig {
     public static final ForgeConfigSpec SPEC;
 
     private static final ForgeConfigSpec.BooleanValue ENABLED;
+    private static final ForgeConfigSpec.BooleanValue TRANSLATION_ENABLED;
     private static final ForgeConfigSpec.BooleanValue SHOW_ENGLISH;
     private static final ForgeConfigSpec.BooleanValue AUTO_GENERATE_NAMES;
     private static final ForgeConfigSpec.IntValue MINIMUM_CONFIDENCE;
@@ -18,6 +19,10 @@ public final class ExplorerFixConfig {
         ENABLED = builder
                 .comment("Enable the structure name override.")
                 .define("enabled", true);
+
+        TRANSLATION_ENABLED = builder
+                .comment("Enable Chinese structure translation. Disable it to keep only the performance fixes.")
+                .define("translationEnabled", true);
 
         SHOW_ENGLISH = builder
                 .comment("Append the English name after the Chinese name.")
@@ -44,6 +49,10 @@ public final class ExplorerFixConfig {
 
     public static boolean enabled() {
         return safeGet(ENABLED, true);
+    }
+
+    public static boolean translationEnabled() {
+        return enabled() && safeGet(TRANSLATION_ENABLED, true);
     }
 
     public static boolean showEnglish() {

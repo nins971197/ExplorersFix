@@ -42,7 +42,7 @@ public final class StructureNameResolver {
     }
 
     public static String resolve(ResourceLocation structureId, String original) {
-        if (structureId == null || !ExplorerFixConfig.enabled()) {
+        if (structureId == null || !ExplorerFixConfig.translationEnabled()) {
             return original;
         }
 
@@ -60,6 +60,9 @@ public final class StructureNameResolver {
 
     public static boolean matchesSearch(ResourceLocation structureId, String searchTerm) {
         if (structureId == null) {
+            return false;
+        }
+        if (!ExplorerFixConfig.translationEnabled()) {
             return false;
         }
         if (searchTerm == null || searchTerm.isBlank()) {
